@@ -1,6 +1,8 @@
 #ifndef PID_H
 #define PID_H
 
+#include "CircBuff.h"
+
 class PID {
 public:
   /*
@@ -10,9 +12,11 @@ public:
   double i_error;
   double d_error;
 
+  CircBuff i_error_c = CircBuff(10);
+
   /*
   * Coefficients
-  */ 
+  */
   double Kp;
   double Ki;
   double Kd;

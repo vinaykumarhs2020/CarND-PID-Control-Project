@@ -28,13 +28,14 @@ void PID::UpdateError(double cte) {
   d_error = cte - p_error;
   i_error += cte;
   p_error = cte;
+  i_error_c.insert(cte);
 
 #ifdef _DEBUG
   std::cout << "Kp: " << Kp << " Ki: " << Ki << " Kd: " << Kd << std::endl;
-  std::cout << "P_error: " << p_error << " I_error: " << i_error << " D_error: " << d_error << std::endl;
+  std::cout << "P_error: " << p_error << " I_error: " << i_error << " D_error: " << d_error << " i_error_c: "<< i_error_c.sum() << std::endl;
 #endif
 }
 
 double PID::TotalError() {
-  return -1.0 * (Kp*p_error + Ki*i_error + Kd*d_error);
+  return -1.0 * (Kp*p_error + Ki*i_error_c.sum() + Kd*d_error);
 }
